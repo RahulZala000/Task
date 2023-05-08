@@ -3,26 +3,26 @@ package com.rahul.task
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.util.rangeTo
 import com.google.gson.Gson
+import com.rahul.task.databinding.ActivityMainBinding
 import java.io.InputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityMainBinding
 
 
     lateinit var userData:LogResponseModel
     val DD_MM_YYYY = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
-    var loginData:ArrayList<Data> = ArrayList()
-    var logoutData:ArrayList<Data> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding= ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         userData= Gson().fromJson(getData(),LogResponseModel::class.java)
 
@@ -40,12 +40,12 @@ class MainActivity : AppCompatActivity() {
             when(get24Hour(data.timestamp).toInt()){
                 no-> {
                     ++total
-                    Log.d("@total sub",data.id.toString())
+                    Log.d("@id user",data.id.toString())
                 }
             }
         }
+        binding.tvActiveUser.text="$no to ${no+1} hour in active user : $total"
         Log.d("@total",total.toString())
-
     }
 
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             input.read(buffer)
 
             json=String(buffer)
-           // Log.d("@data",json)
+
             return json
         }catch (e:Exception)
         {
@@ -76,23 +76,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun get24Hour(time:String): String {
 
-
-        var date: Date? = null
-
-        val dateFormat = SimpleDateFormat(DD_MM_YYYY)
-        date = dateFormat.parse(time)
-        val dateString = date.toString()
-        val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
+        val inputFormat = SimpleDateFormat(DD_MM_YYYY)
         val outputFormat = SimpleDateFormat("HH")
+        var date: Date? = null
         try {
-         date = inputFormat.parse(dateString)
-        var timeData = outputFormat.format(date)
-            Log.d("@date",timeData)
-            return timeData
-        }catch (e: ParseException) {
-                e.printStackTrace()
+            date = inputFormat.parse(time)
+            return outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
         }
 
-    return " Empty"
+    return ""
     }
 }
