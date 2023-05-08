@@ -2,15 +2,15 @@ package com.rahul.task
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.rahul.task.databinding.ActivityMainBinding
 import java.io.InputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var userData:LogResponseModel
     val DD_MM_YYYY = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
+    var hour:ArrayList<ArrayList<Int>> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,33 +30,30 @@ class MainActivity : AppCompatActivity() {
 
         userData= Gson().fromJson(getData(),LogResponseModel::class.java)
 
-        binding.tvActiveUser.isVisible=false
-        binding.btnSubmit.setOnClickListener {
-            if (binding.edTime.text.isNotEmpty())
-                getActiveUser(binding.edTime.text.toString().toInt())
-            else
-                Toast.makeText(this,"Please enter the Valid no",Toast.LENGTH_SHORT).show()
-        }
+        getActiveUser()
 
     }
 
-    private fun getActiveUser(no:Int) {
-        var total=0
-        for (data in userData.data){
+    private fun getActiveUser() {
 
-            when(get24Hour(data.timestamp).toInt()){
-                no-> {
-                    ++total
-                    Log.d("@id user",data.id.toString())
+        for(i in 0..23) {
+//            var total = 0
+            var activeUser:ArrayList<Int> = ArrayList()
+            for (data in userData.data) {
+
+                when (get24Hour(data.timestamp).toInt()) {
+                    i -> {
+//                        ++total
+                        activeUser.add(data.id)
+
+                    }
                 }
             }
+            hour.add(activeUser)
         }
 
-        binding.tvActiveUser.isVisible=true
-        binding.tvActiveUser.text="$no to ${no+1} hour in active user : $total"
-
-
-
+        binding.recyleview.layoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        binding.recyleview.adapter=LogAdapter(hour)
     }
 
 

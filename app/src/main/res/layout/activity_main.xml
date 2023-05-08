@@ -7,38 +7,12 @@
     android:layout_gravity="center"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/ed_time"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="50dp"
-        style="@style/ThemeOverlay.Material3.TextInputEditText"
-        android:inputType="phone"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        app:layout_constraintEnd_toEndOf="@+id/ed_time"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/ed_time"
-        app:layout_constraintTop_toBottomOf="@+id/ed_time" />
-
-    <TextView
-        android:id="@+id/tv_active_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_submit"
-        app:layout_constraintStart_toStartOf="@+id/btn_submit"
-        app:layout_constraintTop_toBottomOf="@+id/btn_submit" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        tools:itemCount="10"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
