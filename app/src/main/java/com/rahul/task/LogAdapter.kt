@@ -24,7 +24,7 @@ class LogAdapter(var hour: ArrayList<ArrayList<Int>>):RecyclerView.Adapter<LogAd
 
           //  if (curr.size>0){
                 card.visibility=View.VISIBLE
-                tvHour.text="Time : $position to ${position+1}"
+                tvHour.text="Time : $position to ${position+1} ${hour.size}"
                 tvTotal.text="Total Active user : ${curr.size}"
                 tvUser.text="Active user id : $curr"
             /*}

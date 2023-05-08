@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val listType: Type = object : TypeToken<ArrayList<Data>>() {}.type
         userData = Gson().fromJson(getData(), listType)
 
-        getFile()
+      //  getFile()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             binding.dpDate.setOnDateChangedListener(object : DatePicker.OnDateChangedListener {
