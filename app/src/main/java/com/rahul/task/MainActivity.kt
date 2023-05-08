@@ -2,7 +2,9 @@ package com.rahul.task
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.gson.Gson
 import com.rahul.task.databinding.ActivityMainBinding
 import java.io.InputStream
@@ -26,10 +28,13 @@ class MainActivity : AppCompatActivity() {
 
         userData= Gson().fromJson(getData(),LogResponseModel::class.java)
 
-       // get24Hour(userData.data[0].timestamp)
-
-
-        getActiveUser(23)
+        binding.tvActiveUser.isVisible=false
+        binding.btnSubmit.setOnClickListener {
+            if (binding.edTime.text.isNotEmpty())
+                getActiveUser(binding.edTime.text.toString().toInt())
+            else
+                Toast.makeText(this,"Please enter the Valid no",Toast.LENGTH_SHORT).show()
+        }
 
     }
 
@@ -44,8 +49,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.tvActiveUser.isVisible=true
         binding.tvActiveUser.text="$no to ${no+1} hour in active user : $total"
-        Log.d("@total",total.toString())
+
+
+
     }
 
 
