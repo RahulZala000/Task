@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    android:id="@+id/card"
     android:elevation="8dp"
     app:cardUseCompatPadding="true"
     app:cardMaxElevation="6dp"

@@ -2,7 +2,9 @@ package com.rahul.task
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.rahul.task.databinding.LayoutCardBinding
 
@@ -19,9 +21,16 @@ class LogAdapter(var hour: ArrayList<ArrayList<Int>>):RecyclerView.Adapter<LogAd
         var curr=hour[position]
 
         holder.binding.apply {
-            tvHour.text="Time : $position to ${position+1}"
-            tvTotal.text="Total Active user : ${curr.size}"
-            tvUser.text="Active user id : $curr"
+
+          //  if (curr.size>0){
+                card.visibility=View.VISIBLE
+                tvHour.text="Time : $position to ${position+1}"
+                tvTotal.text="Total Active user : ${curr.size}"
+                tvUser.text="Active user id : $curr"
+            /*}
+            else{
+                card.visibility=View.GONE
+            }*/
         }
     }
 
