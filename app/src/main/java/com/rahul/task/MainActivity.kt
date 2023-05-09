@@ -66,7 +66,11 @@ class MainActivity : AppCompatActivity() {
                 activeuser.add(data)
             }
         }
-        getActiveUser()
+
+        binding.recyleview.layoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        binding.recyleview.adapter=LogAdapter(activeuser)
+
+        //getActiveUser()
     }
 
 
@@ -97,10 +101,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getActiveUser() {
-        var hour:ArrayList<ArrayList<Int>> = ArrayList()
+        val hour:ArrayList<ArrayList<Int>> = ArrayList()
         for(i in 0..23) {
 
-            var activeUser:ArrayList<Int> = ArrayList()
+            val activeUser:ArrayList<Int> = ArrayList()
             for (data in activeuser) {
 
             getDate(data.timestamp)
@@ -110,11 +114,14 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            hour.add(activeUser)
+            if (activeUser.isNotEmpty())
+                hour.add(activeUser)
         }
 
+
+
         binding.recyleview.layoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-        binding.recyleview.adapter=LogAdapter(hour)
+       // binding.recyleview.adapter=LogAdapter(hour)
     }
 
 

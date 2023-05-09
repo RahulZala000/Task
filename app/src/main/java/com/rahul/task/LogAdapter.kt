@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.rahul.task.databinding.LayoutCardBinding
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
-class LogAdapter(var hour: ArrayList<ArrayList<Int>>):RecyclerView.Adapter<LogAdapter.MyViewHolder>() {
+class LogAdapter(var hour: ArrayList<Data>):RecyclerView.Adapter<LogAdapter.MyViewHolder>() {
+
+    val DD_MM_YYYY = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
     class MyViewHolder(var binding:LayoutCardBinding):RecyclerView.ViewHolder(binding.root)
 
@@ -23,15 +27,30 @@ class LogAdapter(var hour: ArrayList<ArrayList<Int>>):RecyclerView.Adapter<LogAd
         holder.binding.apply {
 
           //  if (curr.size>0){
-                card.visibility=View.VISIBLE
-                tvHour.text="Time : $position to ${position+1} ${hour.size}"
-                tvTotal.text="Total Active user : ${curr.size}"
-                tvUser.text="Active user id : $curr"
+               // card.visibility=View.VISIBLE
+                tvHour.text="Time : ${get24Hour(curr.timestamp)} to ${get24Hour(curr.timestamp)+1}"
+               // tvTotal.text="Total Active user : ${curr}"
+                tvUser.text="Active user id : ${curr.id}"
             /*}
             else{
                 card.visibility=View.GONE
             }*/
         }
+    }
+
+    private fun get24Hour(time:String): Int {
+
+        val inputFormat = SimpleDateFormat(DD_MM_YYYY)
+        val outputFormat = SimpleDateFormat("HH")
+        var date: Date? = null
+        try {
+            date = inputFormat.parse(time)
+            return outputFormat.format(date).toInt()
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return 1
     }
 
     override fun getItemCount(): Int {
